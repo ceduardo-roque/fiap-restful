@@ -1,0 +1,39 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.0'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'br.com.fiap.wsrest'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	//Spring
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// Retrofit
+	implementation 'com.squareup.retrofit2:retrofit:2.9.0' 
+	implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+	
+	// JSON
+	implementation 'com.google.code.gson:gson:2.8.6'
+	
+	//Swagger
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	
+	// H2 DB
+	runtimeOnly 'com.h2database:h2'
+	
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+	useJUnitPlatform()
+}

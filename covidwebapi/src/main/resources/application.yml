@@ -1,0 +1,9 @@
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+
+server:
+  port: 8088
+  servlet:
+    context-path: /covid-web-api
