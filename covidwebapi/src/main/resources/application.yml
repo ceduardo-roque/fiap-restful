@@ -14,4 +14,5 @@ covid:
       summary: https://api.covid19api.com/summary
       status-api: https://covid19-brazil-api.now.sh/api/status/v1
       data-especifica-brasil: https://covid19-brazil-api.now.sh/api/report/v1/brazil/
+      data-especifica-pais: https://api.covid19api.com/country/
 

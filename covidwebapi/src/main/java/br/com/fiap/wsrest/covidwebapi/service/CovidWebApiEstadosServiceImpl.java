@@ -17,26 +17,18 @@ import com.google.gson.Gson;
 import br.com.fiap.wsrest.covidwebapi.dto.OcorrenciaDiariaCovidDTO;
 import br.com.fiap.wsrest.covidwebapi.dto.RetornoEstadoDTO;
 import br.com.fiap.wsrest.covidwebapi.dto.RetornoGlobalDTO;
-import br.com.fiap.wsrest.covidwebapi.dto.RetornoPaisDTO;
 import br.com.fiap.wsrest.covidwebapi.dto.TotalPeriodoDTO;
 import br.com.fiap.wsrest.covidwebapi.service.utils.ConsultaBrasilNoDia;
 import br.com.fiap.wsrest.covidwebapi.service.utils.DadosBrasileirosCovid;
 
 @Service
-public class CovidWebApiServiceImpl extends DefaultWebApiService implements CovidWebApiService {
+public class CovidWebApiEstadosServiceImpl extends DefaultWebApiService implements CovidWebApiEstadosService {
 
-	private final Logger logger = LoggerFactory.getLogger(CovidWebApiServiceImpl.class);
-	
-	@Value("${covid.api.url.status-api}")
-	private String covidUrlApiStatus; // OK
-	
-	@Value("${covid.api.url.summary}")	
-	private String covidUrlApiStatusWorldSummary; // OK
+	private final Logger logger = LoggerFactory.getLogger(CovidWebApiEstadosServiceImpl.class);
 
 	@Value("${covid.api.url.data-especifica-brasil}")	
-	private String covidUrlApiBrasilDataEspecifica; // OK
-	
-	
+	private String covidUrlApiBrasilDataEspecifica; 
+		
 	@Override
 	public List<RetornoEstadoDTO> buscaSituacaoEmEstados(String estados, String de, String ate) {
 		try {
@@ -151,15 +143,6 @@ public class CovidWebApiServiceImpl extends DefaultWebApiService implements Covi
 		return ocorrencia;
 	}
 
-	private LocalDate criaLocalDateAPartirDaDataPassada(String dataPassada) {
-		return LocalDate.parse(dataPassada, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	}
-	
-	@Override
-	public RetornoPaisDTO buscaSituacaoEmUmPais(String pais, String de, String ate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public RetornoGlobalDTO buscaSituacaoGlobais()  {
@@ -180,23 +163,5 @@ public class CovidWebApiServiceImpl extends DefaultWebApiService implements Covi
 
 		return null;
 	}
-
-	@Override
-	public List<RetornoPaisDTO> buscaSituacaoPaises(String paises, String de, String ate) {
-//		if(validaStatusDaApi()) {		
-//			// Gather data from a specific country in a range of dates 
-//			
-//			String url = covidUrlApiPaisEspecifico + 
-//					"brazil?from="+de+"T00:00:00Z&to="+ate+"T00:00:00Z";
-//			
-//			OcorrenciaPais paisPorPeriodo = new Gson().fromJson(super.invokeWebApi(url), OcorrenciaPais.class);
-//			System.out.println(paisPorPeriodo);
-//			
-//		} else {
-//			logger.error("Não foi possível recuperar os dados da API. Covid Web API indisponível!");
-//		}
-		return null;
-	}
-
 	
 }

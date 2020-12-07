@@ -14,23 +14,25 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.wsrest.covidwebapi.dto.RetornoEstadoDTO;
 import br.com.fiap.wsrest.covidwebapi.dto.RetornoGlobalDTO;
 import br.com.fiap.wsrest.covidwebapi.dto.RetornoPaisDTO;
-import br.com.fiap.wsrest.covidwebapi.fake.GeradorRetornoFake;
-import br.com.fiap.wsrest.covidwebapi.service.CovidWebApiService;
+import br.com.fiap.wsrest.covidwebapi.service.CovidWebApiEstadosService;
+import br.com.fiap.wsrest.covidwebapi.service.CovidWebApiPaisesService;
 
 @RestController
 @RequestMapping("covid")
 public class CovidController {
 	
 	//private final Logger logger = LoggerFactory.getLogger(CovidController.class);
-	private CovidWebApiService coviApiService;
+	private CovidWebApiEstadosService coviApiEstadosService;
+	private CovidWebApiPaisesService coviApiPaisesService;
 	
-	public CovidController(CovidWebApiService service) {
-		this.coviApiService = service;
+	public CovidController(CovidWebApiEstadosService estadosService, CovidWebApiPaisesService paisesService) {
+		this.coviApiEstadosService = estadosService;
+		this.coviApiPaisesService = paisesService;
 	}
 	
 	@GetMapping("estado/{estado}")
 	public ResponseEntity<RetornoEstadoDTO> buscaCasosEmUmEstado(@PathVariable String estado, @RequestParam String periodoDe, @RequestParam String periodoAte){
-		RetornoEstadoDTO result = coviApiService.buscaSituacaoEmUmEstado(estado, periodoDe, periodoAte);
+		RetornoEstadoDTO result = coviApiEstadosService.buscaSituacaoEmUmEstado(estado, periodoDe, periodoAte);
 		if(result!=null)
 			return new ResponseEntity<RetornoEstadoDTO>(result, HttpStatus.OK);
 		else
@@ -39,7 +41,7 @@ public class CovidController {
 	
 	@GetMapping("estado")
 	public ResponseEntity<List<RetornoEstadoDTO>> buscaCasosEmDiversosEstados(@RequestParam String estados, @RequestParam String periodoDe, @RequestParam String periodoAte){
-		List<RetornoEstadoDTO> result = coviApiService.buscaSituacaoEmEstados(estados, periodoDe, periodoAte);
+		List<RetornoEstadoDTO> result = coviApiEstadosService.buscaSituacaoEmEstados(estados, periodoDe, periodoAte);
 		
 		if(result!=null)
 			return new ResponseEntity<List<RetornoEstadoDTO>>(result, HttpStatus.OK);
@@ -48,23 +50,29 @@ public class CovidController {
 	}
 	
 	@GetMapping("pais/{pais}")
-	public RetornoPaisDTO buscaCasosEmUmPais(@PathVariable String pais, @RequestParam String periodoDe, @RequestParam String periodoAte){
-		GeradorRetornoFake gerador = new GeradorRetornoFake();
-		RetornoPaisDTO retorno = gerador.montaRetornoPaisFake();
-		retorno.setPais(pais);
-		retorno.setNome(gerador.recuperaNomePais(pais));
-		return retorno;
+	public ResponseEntity<RetornoPaisDTO> buscaCasosEmUmPais(@PathVariable String pais, @RequestParam String periodoDe, @RequestParam String periodoAte){
+		RetornoPaisDTO result = coviApiPaisesService.buscaSituacaoEmUmPais(pais, periodoDe, periodoAte);
+		
+		if(result!=null)
+			return new ResponseEntity<RetornoPaisDTO>(result, HttpStatus.OK);
+		else
+			return new ResponseEntity<RetornoPaisDTO>(result, HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("pais")
-	public List<RetornoPaisDTO> buscaCasosEmDiversosPaises(@RequestParam String paises, @RequestParam String periodoDe, @RequestParam String periodoAte){
-		return coviApiService.buscaSituacaoPaises(paises, periodoDe, periodoAte);
+	public ResponseEntity<List<RetornoPaisDTO>> buscaCasosEmDiversosPaises(@RequestParam String paises, @RequestParam String periodoDe, @RequestParam String periodoAte){
+		List<RetornoPaisDTO> result = coviApiPaisesService.buscaSituacaoPaises(paises, periodoDe, periodoAte);
+		
+		if(result!=null)
+			return new ResponseEntity<List<RetornoPaisDTO>>(result, HttpStatus.OK);
+		else
+			return new ResponseEntity<List<RetornoPaisDTO>>(result, HttpStatus.NO_CONTENT);
 	}
 	
 	
 	@GetMapping("global")
 	public RetornoGlobalDTO buscaCasosGlobais(){
-		return coviApiService.buscaSituacaoGlobais();
+		return coviApiEstadosService.buscaSituacaoGlobais();
 
 	}
 }

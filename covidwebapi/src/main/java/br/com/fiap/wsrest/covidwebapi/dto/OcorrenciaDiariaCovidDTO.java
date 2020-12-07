@@ -2,7 +2,7 @@ package br.com.fiap.wsrest.covidwebapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(value = { "possuiDados", "estado", "uf" })
+@JsonIgnoreProperties(value = { "possuiDados", "estado", "uf", "slug", "pais" })
 public class OcorrenciaDiariaCovidDTO {
 
 	private long casos;
@@ -12,7 +12,21 @@ public class OcorrenciaDiariaCovidDTO {
 	private boolean possuiDados;
 	private String estado;
 	private String uf;
+	private String slug;
+	private String pais;
 	
+	public String getSlug() {
+		return slug;
+	}
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+	public String getPais() {
+		return pais;
+	}
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
 	public String getEstado() {
 		return estado;
 	}

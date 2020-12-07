@@ -1,6 +1,8 @@
 package br.com.fiap.wsrest.covidwebapi.service;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -42,6 +44,9 @@ public class DefaultWebApiService {
 		return null;
 	}
 	
+	protected LocalDate criaLocalDateAPartirDaDataPassada(String dataPassada) {
+		return LocalDate.parse(dataPassada, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	}
 	
 	
 }
