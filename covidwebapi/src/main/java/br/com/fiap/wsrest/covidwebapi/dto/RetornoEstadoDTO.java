@@ -1,13 +1,14 @@
 package br.com.fiap.wsrest.covidwebapi.dto;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class RetornoEstadoDTO {
 
 	private String estado;
 	private String nome;
-	private List<OcorrenciaDiariaCovidDTO> periodos;
-	private TotalPeriodoDTO totaisPeriodo;
+	private List<OcorrenciaDiariaCovidDTO> periodos = new LinkedList<OcorrenciaDiariaCovidDTO>();
+	private TotalPeriodoDTO totaisPeriodo = new TotalPeriodoDTO();
 	
 	public String getEstado() {
 		return estado;

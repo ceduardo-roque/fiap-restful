@@ -2,26 +2,26 @@ package br.com.fiap.wsrest.covidwebapi.dto;
 
 public class TotalPeriodoDTO {
 
-	private int casos;
-	private int mortes;
-	private int recuperados;
+	private long casos;
+	private long mortes;
+	private long recuperados;
 	
-	public int getCasos() {
+	public long getCasos() {
 		return casos;
 	}
-	public void setCasos(int casos) {
+	public void setCasos(long casos) {
 		this.casos = casos;
 	}
-	public int getMortes() {
+	public long getMortes() {
 		return mortes;
 	}
-	public void setMortes(int mortes) {
+	public void setMortes(long mortes) {
 		this.mortes = mortes;
 	}
-	public int getRecuperados() {
+	public long getRecuperados() {
 		return recuperados;
 	}
-	public void setRecuperados(int recuperados) {
+	public void setRecuperados(long recuperados) {
 		this.recuperados = recuperados;
 	}
 	
