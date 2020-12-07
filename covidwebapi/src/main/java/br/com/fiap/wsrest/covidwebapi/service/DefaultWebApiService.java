@@ -23,7 +23,7 @@ public class DefaultWebApiService {
 		
 		try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 		    HttpGet httpGet = new HttpGet(url);
-		    
+		    logger.info("Buscando URL: " + url);
 		    try (CloseableHttpResponse response1 = httpclient.execute(httpGet)) {
 		        if(response1.getCode() == HttpStatus.SC_OK) {
 			        HttpEntity entity1 = response1.getEntity();

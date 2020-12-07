@@ -60,7 +60,8 @@ public class CovidWebApiPaisesServiceImpl extends DefaultWebApiService implement
 		List<RetornoPaisDTO> listaRetorno = new LinkedList<RetornoPaisDTO>();
 		for (String pais : paisesQuebrados) {
 			RetornoPaisDTO paisConsolidado = buscaSituacaoEmUmPais(pais, de, ate);
-			listaRetorno.add(paisConsolidado);
+			if(paisConsolidado!=null)
+				listaRetorno.add(paisConsolidado);
 		}
 		if(listaRetorno.isEmpty())
 			return null;
@@ -103,19 +104,20 @@ public class CovidWebApiPaisesServiceImpl extends DefaultWebApiService implement
 	}
 
 	private TotalPeriodoDTO consolidaTotaisPais(List<OcorrenciaDiariaCovidDTO> listaOcorrenciasNoPais) {
-		OcorrenciaDiariaCovidDTO primeiraOcorrenciaComValores = null;
-		OcorrenciaDiariaCovidDTO ultimaOcorrenciaComValores = null;
-		
+		long totalCasos = 0;
+		long totalMortes = 0;
+		long totalRecuperados = 0;
 		for (OcorrenciaDiariaCovidDTO ocorrenciaDiariaCovidDTO : listaOcorrenciasNoPais) {
-			if(ocorrenciaDiariaCovidDTO.isPossuiDados() && primeiraOcorrenciaComValores == null)
-				primeiraOcorrenciaComValores = ocorrenciaDiariaCovidDTO;
-			
-			if(ocorrenciaDiariaCovidDTO.isPossuiDados())
-				ultimaOcorrenciaComValores = ocorrenciaDiariaCovidDTO;
+			totalCasos += ocorrenciaDiariaCovidDTO.getCasos();
+			totalMortes += ocorrenciaDiariaCovidDTO.getMortes();
+			totalRecuperados += ocorrenciaDiariaCovidDTO.getRecuperados();
 		}
-		if(primeiraOcorrenciaComValores != null && ultimaOcorrenciaComValores != null)
-			return consolidaTotalPeriodo(primeiraOcorrenciaComValores, ultimaOcorrenciaComValores);
-		return null;
+		TotalPeriodoDTO totalPeriodoDTO = new TotalPeriodoDTO();
+		totalPeriodoDTO.setCasos(totalCasos);
+		totalPeriodoDTO.setMortes(totalMortes);
+		totalPeriodoDTO.setRecuperados(totalRecuperados);
+		return totalPeriodoDTO;		
+
 	}
 
 	private TotalPeriodoDTO consolidaTotalPeriodo(OcorrenciaDiariaCovidDTO primeiraOcorrenciaComValores, OcorrenciaDiariaCovidDTO ultimaOcorrenciaComValores) {
