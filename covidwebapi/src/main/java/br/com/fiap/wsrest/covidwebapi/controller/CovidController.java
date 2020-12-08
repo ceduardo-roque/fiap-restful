@@ -1,6 +1,9 @@
 package br.com.fiap.wsrest.covidwebapi.controller;
 
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -32,7 +35,13 @@ public class CovidController {
 	
 	@GetMapping("estado/{estado}")
 	public ResponseEntity<RetornoEstadoDTO> buscaCasosEmUmEstado(@PathVariable String estado, @RequestParam String periodoDe, @RequestParam String periodoAte){
-		RetornoEstadoDTO result = coviApiEstadosService.buscaSituacaoEmUmEstado(estado, periodoDe, periodoAte);
+		RetornoEstadoDTO result = null;
+		
+		if(!dataValida(periodoDe) || !(dataValida(periodoAte)))
+			return new ResponseEntity<RetornoEstadoDTO>(result, HttpStatus.BAD_REQUEST); 
+		
+		result = coviApiEstadosService.buscaSituacaoEmUmEstado(estado, periodoDe, periodoAte);
+		
 		if(result!=null)
 			return new ResponseEntity<RetornoEstadoDTO>(result, HttpStatus.OK);
 		else
@@ -41,7 +50,12 @@ public class CovidController {
 	
 	@GetMapping("estado")
 	public ResponseEntity<List<RetornoEstadoDTO>> buscaCasosEmDiversosEstados(@RequestParam String estados, @RequestParam String periodoDe, @RequestParam String periodoAte){
-		List<RetornoEstadoDTO> result = coviApiEstadosService.buscaSituacaoEmEstados(estados, periodoDe, periodoAte);
+		List<RetornoEstadoDTO> result = null;
+		
+		if(!dataValida(periodoDe) || !(dataValida(periodoAte)))
+			return new ResponseEntity<List<RetornoEstadoDTO>>(result, HttpStatus.BAD_REQUEST); 
+		
+		result = coviApiEstadosService.buscaSituacaoEmEstados(estados, periodoDe, periodoAte);
 		
 		if(result!=null)
 			return new ResponseEntity<List<RetornoEstadoDTO>>(result, HttpStatus.OK);
@@ -51,7 +65,12 @@ public class CovidController {
 	
 	@GetMapping("pais/{pais}")
 	public ResponseEntity<RetornoPaisDTO> buscaCasosEmUmPais(@PathVariable String pais, @RequestParam String periodoDe, @RequestParam String periodoAte){
-		RetornoPaisDTO result = coviApiPaisesService.buscaSituacaoEmUmPais(pais, periodoDe, periodoAte);
+		RetornoPaisDTO result = null;
+		
+		if(!dataValida(periodoDe) || !(dataValida(periodoAte)))
+			return new ResponseEntity<RetornoPaisDTO>(result, HttpStatus.BAD_REQUEST); 
+		
+		result = coviApiPaisesService.buscaSituacaoEmUmPais(pais, periodoDe, periodoAte);
 		
 		if(result!=null)
 			return new ResponseEntity<RetornoPaisDTO>(result, HttpStatus.OK);
@@ -61,7 +80,11 @@ public class CovidController {
 	
 	@GetMapping("pais")
 	public ResponseEntity<List<RetornoPaisDTO>> buscaCasosEmDiversosPaises(@RequestParam String paises, @RequestParam String periodoDe, @RequestParam String periodoAte){
-		List<RetornoPaisDTO> result = coviApiPaisesService.buscaSituacaoPaises(paises, periodoDe, periodoAte);
+		List<RetornoPaisDTO> result = null;
+		if(!dataValida(periodoDe) || !(dataValida(periodoAte)))
+			return new ResponseEntity<List<RetornoPaisDTO>>(result, HttpStatus.BAD_REQUEST); 
+
+		result = coviApiPaisesService.buscaSituacaoPaises(paises, periodoDe, periodoAte);
 		
 		if(result!=null)
 			return new ResponseEntity<List<RetornoPaisDTO>>(result, HttpStatus.OK);
@@ -75,5 +98,15 @@ public class CovidController {
 		return coviApiEstadosService.buscaSituacaoGlobais();
 
 	}
+	
+    private boolean dataValida(String dateStr) {
+        try {
+        	LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+        return true;
+    }
+	
 }
 

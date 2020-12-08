@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,19 +77,28 @@ public class CovidWebApiPaisesServiceImpl extends DefaultWebApiService implement
 		
 		Type collectionType = new TypeToken<Collection<DadosPaisCovid>>(){}.getType();
 		Collection<DadosPaisCovid> dadosPais = new Gson().fromJson(super.invokeWebApi(url), collectionType);
+
+		Map<String, OcorrenciaDiariaCovidDTO> mapaAgrupadoPorData = new HashMap<String, OcorrenciaDiariaCovidDTO>();
+
 		
 		List<OcorrenciaDiariaCovidDTO> listaRetorno = new LinkedList<OcorrenciaDiariaCovidDTO>();
-		
 		if(dadosPais!=null) {
 			for (DadosPaisCovid dadosPaisCovid : dadosPais) {
-				OcorrenciaDiariaCovidDTO ocorrencia = new OcorrenciaDiariaCovidDTO();
-				ocorrencia.setCasos(Long.valueOf(dadosPaisCovid.getConfirmed()));
-				ocorrencia.setMortes(dadosPaisCovid.getDeaths());
-				ocorrencia.setRecuperados(dadosPaisCovid.getRecovered());	
+				OcorrenciaDiariaCovidDTO ocorrencia = null;
+
+				if(mapaAgrupadoPorData.containsKey(dadosPaisCovid.getDate()))
+					ocorrencia = mapaAgrupadoPorData.get(dadosPaisCovid.getDate());
+				else {
+					ocorrencia = new OcorrenciaDiariaCovidDTO();
+					mapaAgrupadoPorData.put(dadosPaisCovid.getDate(), ocorrencia);
+					listaRetorno.add(ocorrencia);
+				}
+				ocorrencia.setCasos(Long.valueOf(dadosPaisCovid.getConfirmed()) + ocorrencia.getCasos());
+				ocorrencia.setMortes(dadosPaisCovid.getDeaths() + ocorrencia.getMortes());
+				ocorrencia.setRecuperados(dadosPaisCovid.getRecovered() + ocorrencia.getRecuperados());	
 				ocorrencia.setPossuiDados(true);
 				ocorrencia.setPais(dadosPaisCovid.getCountry());
 				ocorrencia.setData(dadosPaisCovid.getDate().substring(0, 10));
-				listaRetorno.add(ocorrencia);
 			}
 		}
 		return listaRetorno;
@@ -107,11 +118,13 @@ public class CovidWebApiPaisesServiceImpl extends DefaultWebApiService implement
 		long totalCasos = 0;
 		long totalMortes = 0;
 		long totalRecuperados = 0;
-		for (OcorrenciaDiariaCovidDTO ocorrenciaDiariaCovidDTO : listaOcorrenciasNoPais) {
-			totalCasos += ocorrenciaDiariaCovidDTO.getCasos();
-			totalMortes += ocorrenciaDiariaCovidDTO.getMortes();
-			totalRecuperados += ocorrenciaDiariaCovidDTO.getRecuperados();
-		}
+
+		OcorrenciaDiariaCovidDTO primeiraOcorrenciaNoPeriodo = listaOcorrenciasNoPais.get(0);
+		OcorrenciaDiariaCovidDTO ultimaOcorrenciaNoPeriodo = listaOcorrenciasNoPais.get(listaOcorrenciasNoPais.size()-1);
+		totalCasos = ultimaOcorrenciaNoPeriodo.getCasos() - primeiraOcorrenciaNoPeriodo.getCasos();
+		totalMortes = ultimaOcorrenciaNoPeriodo.getMortes() - primeiraOcorrenciaNoPeriodo.getMortes();
+		totalRecuperados = ultimaOcorrenciaNoPeriodo.getRecuperados() - primeiraOcorrenciaNoPeriodo.getRecuperados();
+		
 		TotalPeriodoDTO totalPeriodoDTO = new TotalPeriodoDTO();
 		totalPeriodoDTO.setCasos(totalCasos);
 		totalPeriodoDTO.setMortes(totalMortes);
