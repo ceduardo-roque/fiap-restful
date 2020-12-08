@@ -95,8 +95,7 @@ public class CovidController {
 	
 	@GetMapping("global")
 	public RetornoGlobalDTO buscaCasosGlobais(){
-		return coviApiEstadosService.buscaSituacaoGlobais();
-
+		return coviApiPaisesService.buscaSituacaoGlobais();
 	}
 	
     private boolean dataValida(String dateStr) {

@@ -19,9 +19,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import br.com.fiap.wsrest.covidwebapi.dto.OcorrenciaDiariaCovidDTO;
+import br.com.fiap.wsrest.covidwebapi.dto.RetornoGlobalDTO;
 import br.com.fiap.wsrest.covidwebapi.dto.RetornoPaisDTO;
 import br.com.fiap.wsrest.covidwebapi.dto.TotalPeriodoDTO;
 import br.com.fiap.wsrest.covidwebapi.service.utils.DadosPaisCovid;
+import br.com.fiap.wsrest.covidwebapi.service.utils.Global;
 
 @Service
 public class CovidWebApiPaisesServiceImpl extends DefaultWebApiService implements CovidWebApiPaisesService {
@@ -29,7 +31,10 @@ public class CovidWebApiPaisesServiceImpl extends DefaultWebApiService implement
 	private final Logger logger = LoggerFactory.getLogger(CovidWebApiPaisesServiceImpl.class);
 	
 	@Value("${covid.api.url.data-especifica-pais}")
-	private String covidUrlApiPaisDataEspecifica; // OK
+	private String covidUrlApiPaisDataEspecifica; 
+	
+	@Value("${covid.api.url.summary}")
+	private String covidUrlApiSummary; 
 	
 	@Override
 	public RetornoPaisDTO buscaSituacaoEmUmPais(String pais, String de, String ate) {
@@ -133,15 +138,22 @@ public class CovidWebApiPaisesServiceImpl extends DefaultWebApiService implement
 
 	}
 
-	private TotalPeriodoDTO consolidaTotalPeriodo(OcorrenciaDiariaCovidDTO primeiraOcorrenciaComValores, OcorrenciaDiariaCovidDTO ultimaOcorrenciaComValores) {
-		long totalCasos = ultimaOcorrenciaComValores.getCasos() - primeiraOcorrenciaComValores.getCasos();
-		long totalMortes = ultimaOcorrenciaComValores.getMortes() - primeiraOcorrenciaComValores.getMortes();
-		long totalRecuperados = ultimaOcorrenciaComValores.getRecuperados() - primeiraOcorrenciaComValores.getRecuperados();
-		TotalPeriodoDTO totalPeriodoDTO = new TotalPeriodoDTO();
-		totalPeriodoDTO.setCasos(totalCasos);
-		totalPeriodoDTO.setMortes(totalMortes);
-		totalPeriodoDTO.setRecuperados(totalRecuperados);
-		return totalPeriodoDTO;
+	@Override
+	public RetornoGlobalDTO buscaSituacaoGlobais() {
+		// Get Summary from World Data API 
+		Global global = new Gson().fromJson(super.invokeWebApi(covidUrlApiSummary), Global.class);
+		
+		// Generate DTO to return
+		RetornoGlobalDTO result = new RetornoGlobalDTO();
+		
+		// Create internal DTO 
+		TotalPeriodoDTO totaisPeriodo = new TotalPeriodoDTO();
+		totaisPeriodo.setCasos(global.getGlobal().getTotalConfirmed());
+		totaisPeriodo.setMortes(global.getGlobal().getTotalDeaths());
+		totaisPeriodo.setRecuperados(global.getGlobal().getTotalRecovered());
+		
+		result.setTotaisPeriodo(totaisPeriodo);
+		return result;
 	}
 
 

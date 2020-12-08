@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 
 import br.com.fiap.wsrest.covidwebapi.dto.OcorrenciaDiariaCovidDTO;
 import br.com.fiap.wsrest.covidwebapi.dto.RetornoEstadoDTO;
-import br.com.fiap.wsrest.covidwebapi.dto.RetornoGlobalDTO;
 import br.com.fiap.wsrest.covidwebapi.dto.TotalPeriodoDTO;
 import br.com.fiap.wsrest.covidwebapi.service.utils.ConsultaBrasilNoDia;
 import br.com.fiap.wsrest.covidwebapi.service.utils.DadosBrasileirosCovid;
@@ -141,27 +140,6 @@ public class CovidWebApiEstadosServiceImpl extends DefaultWebApiService implemen
 			}
 		}
 		return ocorrencia;
-	}
-
-
-	@Override
-	public RetornoGlobalDTO buscaSituacaoGlobais()  {
-				// Get Summary from World Data API 
-//				Global global = new Gson().fromJson(super.invokeWebApi(covidUrlApiStatusWorldSummary), Global.class);
-				
-				// Generate DTO to return
-//				RetornoGlobalDTO result = new RetornoGlobalDTO();
-//				
-//				// Create internal DTO 
-//				TotalPeriodoDTO totaisPeriodo = new TotalPeriodoDTO();
-//				totaisPeriodo.setCasos(global.getGlobal().getTotalConfirmed());
-//				totaisPeriodo.setMortes(global.getGlobal().getTotalDeaths());
-//				totaisPeriodo.setRecuperados(global.getGlobal().getNewRecovered());
-//				
-//				result.setTotaisPeriodo(totaisPeriodo);
-//				return result;
-
-		return null;
 	}
 	
 }
