@@ -2,6 +2,11 @@ package br.com.fiap.wsrest.covidwebapi.dto;
 
 import java.util.List;
 
+/**
+ * DTO de retorno representando as ocorrências diárias de casos da COVID-19 em um país específico
+ * @author Carlos Eduardo Roque da Silva
+ *
+ */
 public class RetornoPaisDTO {
 
 	private String pais;

@@ -4,6 +4,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Classe de configuração para utilização do Swagger
+ * @author Carlos Eduardo Roque da Silva
+ *
+ */
 public class SwaggerUiWebMvcConfigurer implements WebMvcConfigurer {
     private final String baseUrl;
 

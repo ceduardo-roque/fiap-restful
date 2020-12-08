@@ -1,5 +1,10 @@
 package br.com.fiap.wsrest.covidwebapi.dto;
 
+/**
+ * DTO de retorno representnado quantos casos, óbitos e recuperados há mundialmente
+ * @author Carlos Eduardo Roque da Silva
+ *
+ */
 public class TotalPeriodoDTO {
 
 	private long casos;

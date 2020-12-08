@@ -9,6 +9,11 @@ import br.com.fiap.wsrest.covidwebapi.dto.RetornoGlobalDTO;
 import br.com.fiap.wsrest.covidwebapi.dto.RetornoPaisDTO;
 import br.com.fiap.wsrest.covidwebapi.dto.TotalPeriodoDTO;
 
+/**
+ * Classe para geração de dados fake para testes
+ * @author Carlos Eduardo Roque da Silva
+ *
+ */
 public class GeradorRetornoFake {
 
 	public RetornoGlobalDTO montaRetornoGlobalFake() {

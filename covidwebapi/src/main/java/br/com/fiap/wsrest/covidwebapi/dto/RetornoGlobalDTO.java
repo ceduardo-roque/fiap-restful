@@ -2,6 +2,11 @@ package br.com.fiap.wsrest.covidwebapi.dto;
 
 import java.util.List;
 
+/**
+ * DTO de retorno representando as ocorrências globais de casos da COVID
+ * @author Carlos Eduardo Roque da Silva
+ *
+ */
 public class RetornoGlobalDTO {
 
 	private List<OcorrenciaDiariaCovidDTO> periodos;

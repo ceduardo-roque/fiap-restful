@@ -25,6 +25,11 @@ import br.com.fiap.wsrest.covidwebapi.dto.TotalPeriodoDTO;
 import br.com.fiap.wsrest.covidwebapi.service.utils.DadosPaisCovid;
 import br.com.fiap.wsrest.covidwebapi.service.utils.Global;
 
+/**
+ * Classe Service utilizada para expor métodos para consulta de dados da Covid-19 de países
+ * @author Carlos Eduardo Roque da Silva
+ *
+ */
 @Service
 public class CovidWebApiPaisesServiceImpl extends DefaultWebApiService implements CovidWebApiPaisesService {
 

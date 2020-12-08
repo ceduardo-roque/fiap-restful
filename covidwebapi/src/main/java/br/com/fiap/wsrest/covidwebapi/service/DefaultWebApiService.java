@@ -15,6 +15,11 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Classe mãe das Services que conecta numa API e retorna o JSON retornado
+ * @author Carlos Eduardo Roque da Silva
+ *
+ */
 public class DefaultWebApiService {
 
 	private final Logger logger = LoggerFactory.getLogger(DefaultWebApiService.class);

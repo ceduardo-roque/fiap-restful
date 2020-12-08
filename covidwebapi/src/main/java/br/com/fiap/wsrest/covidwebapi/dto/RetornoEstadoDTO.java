@@ -3,6 +3,11 @@ package br.com.fiap.wsrest.covidwebapi.dto;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * DTO de retorno das ocorrencias diárias em um estado do Brasil
+ * @author Carlos Eduardo Roque da Silva
+ *
+ */
 public class RetornoEstadoDTO {
 
 	private String estado;

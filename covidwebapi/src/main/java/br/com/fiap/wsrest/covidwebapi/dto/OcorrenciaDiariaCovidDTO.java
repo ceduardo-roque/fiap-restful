@@ -2,6 +2,11 @@ package br.com.fiap.wsrest.covidwebapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * DTO de retorno de uma ocorrencia diária da COVID-19
+ * @author Carlos Eduardo Roque da Silva
+ *
+ */
 @JsonIgnoreProperties(value = { "possuiDados", "estado", "uf", "slug", "pais" })
 public class OcorrenciaDiariaCovidDTO {
 
