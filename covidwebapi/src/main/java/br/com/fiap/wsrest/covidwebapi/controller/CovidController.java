@@ -51,8 +51,17 @@ public class CovidController {
 	 * @return Um JSON reprentando o objeto RetornoEstadoDTO
 	 */
 	@GetMapping("estado/{estado}")
-	public ResponseEntity<RetornoEstadoDTO> buscaCasosEmUmEstado(@PathVariable String estado, @RequestParam String periodoDe, @RequestParam String periodoAte){
+	public ResponseEntity<RetornoEstadoDTO> buscaCasosEmUmEstado(@PathVariable String estado, @RequestParam(required = false) String periodoDe, @RequestParam(required = false) String periodoAte){
 		RetornoEstadoDTO result = null;
+		
+		if ((periodoDe==null && periodoAte!=null) || (periodoDe != null && periodoAte == null)) {
+			return new ResponseEntity<RetornoEstadoDTO>(result, HttpStatus.BAD_REQUEST);
+		}
+		
+		if (periodoDe == null && periodoAte == null) {
+			periodoAte = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			periodoDe = LocalDate.now().minusDays(30).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		} 
 		
 		if(!dataValida(periodoDe) || !(dataValida(periodoAte)))
 			return new ResponseEntity<RetornoEstadoDTO>(result, HttpStatus.BAD_REQUEST); 
@@ -73,8 +82,18 @@ public class CovidController {
 	 * @return Um JSON reprentando a collection de objetos List<RetornoEstadoDTO>
 	 */
 	@GetMapping("estado")
-	public ResponseEntity<List<RetornoEstadoDTO>> buscaCasosEmDiversosEstados(@RequestParam String estados, @RequestParam String periodoDe, @RequestParam String periodoAte){
+	public ResponseEntity<List<RetornoEstadoDTO>> buscaCasosEmDiversosEstados(@RequestParam String estados, @RequestParam(required = false) String periodoDe, @RequestParam(required = false) String periodoAte){
 		List<RetornoEstadoDTO> result = null;
+		
+		if ((periodoDe==null && periodoAte!=null) || (periodoDe != null && periodoAte == null)) {
+			return new ResponseEntity<List<RetornoEstadoDTO>>(result, HttpStatus.BAD_REQUEST); 
+		}
+		
+		if (periodoDe == null && periodoAte == null) {
+			periodoAte = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			periodoDe = LocalDate.now().minusDays(30).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		} 
+		
 		
 		if(!dataValida(periodoDe) || !(dataValida(periodoAte)))
 			return new ResponseEntity<List<RetornoEstadoDTO>>(result, HttpStatus.BAD_REQUEST); 
@@ -95,8 +114,17 @@ public class CovidController {
 	 * @return Um JSON representando o objeto RetornoPaisDTO
 	 */
 	@GetMapping("pais/{pais}")
-	public ResponseEntity<RetornoPaisDTO> buscaCasosEmUmPais(@PathVariable String pais, @RequestParam String periodoDe, @RequestParam String periodoAte){
+	public ResponseEntity<RetornoPaisDTO> buscaCasosEmUmPais(@PathVariable String pais, @RequestParam(required = false) String periodoDe, @RequestParam(required = false) String periodoAte){
 		RetornoPaisDTO result = null;
+		
+		if ((periodoDe==null && periodoAte!=null) || (periodoDe != null && periodoAte == null)) {
+			return new ResponseEntity<RetornoPaisDTO>(result, HttpStatus.BAD_REQUEST); 
+		}
+		
+		if (periodoDe == null && periodoAte == null) {
+			periodoAte = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			periodoDe = LocalDate.now().minusDays(30).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		} 
 		
 		if(!dataValida(periodoDe) || !(dataValida(periodoAte)))
 			return new ResponseEntity<RetornoPaisDTO>(result, HttpStatus.BAD_REQUEST); 
@@ -117,8 +145,18 @@ public class CovidController {
 	 * @return Um JSON representando uma collection do objeto retornado como List<RetornoPaisDTO>
 	 */
 	@GetMapping("pais")
-	public ResponseEntity<List<RetornoPaisDTO>> buscaCasosEmDiversosPaises(@RequestParam String paises, @RequestParam String periodoDe, @RequestParam String periodoAte){
+	public ResponseEntity<List<RetornoPaisDTO>> buscaCasosEmDiversosPaises(@RequestParam String paises, @RequestParam(required = false) String periodoDe, @RequestParam(required = false) String periodoAte){
 		List<RetornoPaisDTO> result = null;
+		
+		if ((periodoDe==null && periodoAte!=null) || (periodoDe != null && periodoAte == null)) {
+			return new ResponseEntity<List<RetornoPaisDTO>>(result, HttpStatus.BAD_REQUEST); 
+		}
+		
+		if (periodoDe == null && periodoAte == null) {
+			periodoAte = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			periodoDe = LocalDate.now().minusDays(30).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		} 
+		
 		if(!dataValida(periodoDe) || !(dataValida(periodoAte)))
 			return new ResponseEntity<List<RetornoPaisDTO>>(result, HttpStatus.BAD_REQUEST); 
 
