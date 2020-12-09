@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-StsFiapApplication<sts-fiap>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.fiap.sts.stsfiap.StsFiapApplication",
+            "projectName": "sts-fiap",
+            "args": ""
+        }
+    ]
+}

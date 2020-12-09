@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:userdb;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: teste2
+  h2:
+    console:
+      enabled: true
+      path: "/h2" 
+server:
+  port: 8082
+jwt:
+  secret: fiapSecr3tfiapSecr3tfiapSecr3tfiapSecr3tfiapSecr3t
+  expiration: 5
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
