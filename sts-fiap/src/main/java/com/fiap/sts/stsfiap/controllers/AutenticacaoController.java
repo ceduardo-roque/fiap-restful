@@ -39,12 +39,14 @@ public class AutenticacaoController {
 	@PostMapping()
 	public ResponseEntity postMethodName(@RequestBody JwtRequest entity) { // @RequestHeader() String Authorization) {
 		// TODO: process POST request
-		if (!(entity.clientId.equalsIgnoreCase("123456") && entity.clientSecret.equalsIgnoreCase("13245487") && entity.grantType.equalsIgnoreCase("password"))) {
+		if (!(entity.clientId.equalsIgnoreCase("123456") && entity.clientSecret.equalsIgnoreCase("13245487")
+				&& entity.grantType.equalsIgnoreCase("password"))) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 
-		if (!entity.cpf.isEmpty() && !entity.password.isEmpty()) {
-			Usuario usuario = _usuariosRepository.findFirstByCpf(entity.cpf);
+		if (!(entity.user == null || entity.user.isEmpty())
+				&& !(entity.password == null || entity.password.isEmpty())) {
+			Usuario usuario = _usuariosRepository.findFirstByCpf(entity.user);
 
 			if (usuario != null && usuario.getSenha().equals(entity.password)) {
 
@@ -66,7 +68,7 @@ public class AutenticacaoController {
 				if (cpfUser != null && !cpfUser.isEmpty()) {
 					var user = _usuariosRepository.findFirstByCpf(cpfUser);
 					if (jwtTokenUtil.validateToken(token, user))
-						return ResponseEntity.ok().body(new JwtValidateResponse(user.getCpf()));
+						return ResponseEntity.ok().body(new JwtValidateResponse(user.getCpf(), user.getTipo()));
 				}
 			} catch (SignatureException ex) {
 				System.out.println("Assinatura de token inválida :" + ex.getMessage());

@@ -60,4 +60,10 @@ public class Usuario {
         this.senha = senha;
         this.tipo = "1";
     }
+
+    public Usuario(String cpf, String senha, String tipo) {
+        this.cpf = cpf;
+        this.senha = senha;
+        this.tipo = tipo;
+    }
 }

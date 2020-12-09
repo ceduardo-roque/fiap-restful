@@ -20,6 +20,7 @@ public class ApplicationRunnerBean implements ApplicationRunner {
     public void run(ApplicationArguments arg0) throws Exception {
         System.out.println("INICIANDO ");
         _usuariosRepository.save(new Usuario("123456", "121294"));
+        _usuariosRepository.save(new Usuario("teste2", "124567","2"));
         // org.h2.tools.Server server = org.h2.tools.Server.createTcpServer().start();
         
     }
