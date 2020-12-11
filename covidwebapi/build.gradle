@@ -30,6 +30,11 @@ dependencies {
 	
 	// H2 DB
 	runtimeOnly 'com.h2database:h2'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+	implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+	
 	
 	// Apache Components API
 	compile 'org.apache.httpcomponents.client5:httpclient5-parent:5.0.3'

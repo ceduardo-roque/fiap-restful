@@ -1,3 +1,4 @@
+securityRemote: http://localhost:8082/
 springfox:
   documentation:
     swagger-ui:
