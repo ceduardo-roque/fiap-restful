@@ -1,9 +1,6 @@
 {
   "name": "COVID Web API",
   "description": "Web API that exposes endpoints do COVID data from third-party sources.",
-  "buildpacks": [
-    {
-      "url": "heroku/java"
-    }
-  ]
+  "repository": "https://github.com/ceduardo-roque/fiap-restful",
+  "image": "heroku/java"
 }
