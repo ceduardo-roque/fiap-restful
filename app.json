@@ -1,0 +1,9 @@
+{
+  "name": "COVID Web API",
+  "description": "Web API that exposes endpoints do COVID data from third-party sources.",
+  "buildpacks": [
+    {
+      "url": "heroku/java"
+    }
+  ]
+}
